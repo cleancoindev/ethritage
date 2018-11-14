@@ -8,7 +8,8 @@ import {
   TokenSymbol,
   TokenURI,
   TokenOfOwnerByIndex,
-  TokenByIndex
+  TokenByIndex,
+  TokenOwnerOf
 } from "../token/index";
 
 class Home extends Component {
@@ -26,15 +27,16 @@ class Home extends Component {
           <br />
           Token Symbol: <TokenSymbol />
           <br />
-          Token URI of Token 1: <TokenURI tokenId={1} />
+          Token URI of Token (1): <TokenURI tokenId={1} />
           <br />
-          TokenID of Owner by Index:{" "}
+          TokenID of Owner by Index: (1) (address: 0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43)
           <TokenOfOwnerByIndex
             address={"0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43"}
             tokenIndex={1}
           /><br/>
-          Token by Index: <TokenByIndex tokenIndex={1}/>
+          Token by Index (1): <TokenByIndex tokenIndex={1}/>
           <br />
+          Token Owner of TokenId(1): <TokenOwnerOf tokenId={1}/>
           <br />
         </div>
       </main>

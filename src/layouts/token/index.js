@@ -5,6 +5,7 @@ import TokenName from "./TokenName/TokenNameContainer";
 import TokenURI from "./TokenURI/TokenURIContainer";
 import TokenOfOwnerByIndex from "./TokenOfOwnerByIndex/TokenOfOwnerByIndexContainer";
 import TokenByIndex from "./TokenByIndex/TokenByIndexContainer";
+import TokenOwnerOf from './TokenOwnerOf/TokenOwnerOfContainer';
 
 export {
   BalanceOfTokenContainer,
@@ -13,5 +14,6 @@ export {
   TokenName,
   TokenURI,
   TokenOfOwnerByIndex,
-  TokenByIndex
+  TokenByIndex,
+  TokenOwnerOf
 };
