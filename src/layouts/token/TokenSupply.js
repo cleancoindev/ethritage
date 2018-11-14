@@ -28,9 +28,9 @@ class TokenSupply extends Component {
     var data = this.props.ethritage.balanceOf[this.dataKey].value
     
     return (
-      <div>
+      <React.Fragment>
         {data}
-      </div>
+      </React.Fragment>
     )
   }
 }
