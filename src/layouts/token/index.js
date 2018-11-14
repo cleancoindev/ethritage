@@ -8,6 +8,7 @@ import TokenByIndex from "./TokenByIndex/TokenByIndexContainer";
 import TokenOwnerOf from './TokenOwnerOf/TokenOwnerOfContainer';
 import TokenIsMinter from './TokenIsMinter/TokenIsMinterContainer';
 import TokenIsApprovedForAll from './TokenIsApprovedForAll/TokenIsApprovedForAllContainer';
+import TokenGetApproved from './TokenGetApproved/TokenGetApprovedContainer';
 
 export {
   BalanceOfTokenContainer,
@@ -20,4 +21,5 @@ export {
   TokenOwnerOf,
   TokenIsMinter,
   TokenIsApprovedForAll,
+  TokenGetApproved,
 };
