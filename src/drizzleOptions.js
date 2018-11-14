@@ -15,7 +15,7 @@ const drizzleOptions = {
     
   },
   polls: {
-    accounts: 1500
+    accounts: 10000
   }
 }
 
