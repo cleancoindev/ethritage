@@ -1,3 +1,3 @@
-import TokenSupplyContainer from './TokenSupply/TokenSupplyContainer';
+import BalanceOfTokenContainer from './BalanceOfToken/BalanceOfTokenContainer';
 
-export {TokenSupplyContainer};
+export {BalanceOfTokenContainer};

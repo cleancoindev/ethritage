@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 //import styles from "./styles.css";
 
-class TokenSupply extends Component {
+class BalanceOfToken extends Component {
   constructor(props, context) {
       console.log("Context is: ", context);
       
@@ -35,8 +35,8 @@ class TokenSupply extends Component {
   }
 }
 
-TokenSupply.contextTypes = {
+BalanceOfToken.contextTypes = {
   drizzle: PropTypes.object
 }
 
-export default TokenSupply;
+export default BalanceOfToken;

@@ -35,7 +35,7 @@ class Home extends Component {
 
     // TutorialToken Vars
     var tokenSymbol = this.props.drizzleStatus.initialized ? this.contracts.TutorialToken.methods.symbol.data() : ''
-    var tokenSupply = this.props.drizzleStatus.initialized ? this.contracts.TutorialToken.methods.totalSupply.data() : 'Loading...'
+    var BalanceOfToken = this.props.drizzleStatus.initialized ? this.contracts.TutorialToken.methods.totalSupply.data() : 'Loading...'
     var tokenBalance = this.props.drizzleStatus.initialized ? this.contracts.TutorialToken.methods.balanceOf.data(this.props.accounts[0]) : 'Loading...'
 
     return(
@@ -59,7 +59,7 @@ class Home extends Component {
 
           <div className="pure-u-1-1">
             <h2>TutorialToken</h2>
-            <p><strong>Total Supply</strong>: {tokenSupply} {tokenSymbol}</p>
+            <p><strong>Total Supply</strong>: {BalanceOfToken} {tokenSymbol}</p>
             <p><strong>My Balance</strong>: {tokenBalance}</p>
             <h3>Send Tokens</h3>
             <form className="pure-form pure-form-stacked">
