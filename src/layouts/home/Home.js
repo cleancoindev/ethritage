@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { AccountData } from 'drizzle-react-components'
-import logo from '../../logo.png'
+
 import {BalanceOfTokenContainer} from '../token/index';
 
 class Home extends Component {
   render() {
-    //console.log("The props: ", this.props);
-    const { ethritage } = this.props;
-    //console.log("Ethritage: ", ethritage);
+
 
     return (
       <main className="container">
