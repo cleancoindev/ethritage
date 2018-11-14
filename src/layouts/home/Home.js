@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AccountData } from 'drizzle-react-components'
 
-import {BalanceOfTokenContainer, TotalSupplyContainer, TokenName, TokenSymbol} from '../token/index';
+import {BalanceOfTokenContainer, TotalSupplyContainer, TokenName, TokenSymbol, TokenURI} from '../token/index';
 
 class Home extends Component {
   render() {
@@ -16,6 +16,7 @@ class Home extends Component {
            Balance of User: <BalanceOfTokenContainer/><br/>
            Token Name: <TokenName/><br/>
            Token Symbol: <TokenSymbol/>
+           Token URI of Token 1: <TokenURI tokenId={1} />
             <br/><br/>
           </div>
       </main>

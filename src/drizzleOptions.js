@@ -12,7 +12,7 @@ const drizzleOptions = {
     ethritageToken
   ],
   events: {
-    
+    ethritageToken: ['Transfer'],
   },
   polls: {
     accounts: 10000
