@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AccountData } from 'drizzle-react-components'
 
-import {BalanceOfTokenContainer} from '../token/index';
+import {BalanceOfTokenContainer, TotalSupplyContainer} from '../token/index';
 
 class Home extends Component {
   render() {
@@ -12,7 +12,8 @@ class Home extends Component {
         <div className="pure-u-1-1">
             <h2>Active Account</h2>
             <AccountData accountIndex="0" units="ether" precision="3" />
-           <BalanceOfTokenContainer/>
+            Total Token Supply: <TotalSupplyContainer/><br/>
+           Balance of User: <BalanceOfTokenContainer/>
             <br/><br/>
           </div>
       </main>
