@@ -26,7 +26,7 @@ class TokenIsApprovedForAll extends Component {
     
     return (
       <React.Fragment>
-        {data}
+        {data ? "True" : "False"}
       </React.Fragment>
     )
   }
