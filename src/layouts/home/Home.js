@@ -9,7 +9,8 @@ import {
   TokenURI,
   TokenOfOwnerByIndex,
   TokenByIndex,
-  TokenOwnerOf
+  TokenOwnerOf,
+  TokenIsMinter
 } from "../token/index";
 
 class Home extends Component {
@@ -38,6 +39,7 @@ class Home extends Component {
           <br />
           Token Owner of TokenId(1): <TokenOwnerOf tokenId={1}/>
           <br />
+          Is This (address: 0x2ca4488037250f9453032aa8de9be5786c5c178b) Minter? <TokenIsMinter address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"}/>
         </div>
       </main>
     );
