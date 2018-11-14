@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AccountData } from 'drizzle-react-components'
 import logo from '../../logo.png'
-import TokenSupplyContainer from '../token/TokenSupplyContainer';
+import TokenSupplyContainer from '../token/index';
 
 class Home extends Component {
   render() {
