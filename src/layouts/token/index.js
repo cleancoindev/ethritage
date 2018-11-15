@@ -9,6 +9,7 @@ import TokenOwnerOf from './TokenOwnerOf/TokenOwnerOfContainer';
 import TokenIsMinter from './TokenIsMinter/TokenIsMinterContainer';
 import TokenIsApprovedForAll from './TokenIsApprovedForAll/TokenIsApprovedForAllContainer';
 import TokenGetApproved from './TokenGetApproved/TokenGetApprovedContainer';
+import BalanceOfAddress from './BalanceOfAddress/BalanceOfAddressContainer';
 
 export {
   BalanceOfTokenContainer,
@@ -22,4 +23,5 @@ export {
   TokenIsMinter,
   TokenIsApprovedForAll,
   TokenGetApproved,
+  BalanceOfAddress,
 };

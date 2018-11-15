@@ -13,6 +13,7 @@ import {
   TokenIsMinter,
   TokenIsApprovedForAll,
   TokenGetApproved,
+  BalanceOfAddress,
 } from "../token/index";
 
 class Home extends Component {
@@ -44,7 +45,8 @@ class Home extends Component {
           Is This (address: 0x2ca4488037250f9453032aa8de9be5786c5c178b) Minter? <TokenIsMinter address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"}/><br/>
           Is this Operator Approved for all? <TokenIsApprovedForAll owner={"0x2ca4488037250f9453032aa8de9be5786c5c178b"} operator={"0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43"} />
           <br/>
-          GetWhoIsApproved tokenid(1): <TokenGetApproved tokenId={1}/>
+          GetWhoIsApproved tokenid(1): <TokenGetApproved tokenId={1}/><br/>
+          Get Balance of Address: (address: 0x2ca4488037250f9453032aa8de9be5786c5c178b) <BalanceOfAddress address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"} />
         </div>
       </main>
     );
