@@ -15,6 +15,7 @@ import {
   TokenGetApproved,
   BalanceOfAddress,
   TokenAddMinter,
+  TokenApprove,
 } from "../token/index";
 
 class Home extends Component {
@@ -52,6 +53,9 @@ class Home extends Component {
         <br/>
         Adding A minter (0x4A3EAeA9f76E26084520926EeC8fCd90d1F08a69): <TokenAddMinter/>
         <br/>
+        <br/>
+        <br/>
+        Approve Token: <TokenApprove />
 
         transferFrom, setApprovalForAll, safeTransferFrom, SafeTransferFromBytes, renounceMinter, mintWithTokenURI, mint, approve, 
         
