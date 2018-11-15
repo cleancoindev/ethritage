@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 //import styles from "./styles.css";
 
@@ -8,13 +8,32 @@ class TokenAddMinter extends Component {
     super(props);
     this.drizzleStatus = this.props.drizzleStatus;
     this.contracts = context.drizzle.contracts;
-    this.minterAddress = this.props.minterAddress || 0;
-    this.dataKey = {},
-    this.txStatus = {},
-    this.state = this.props.state
+
+    this.state = {
+      value: "demostuff"
+    };
+    this.stackId = 0;
+    this.txHash = "";
   }
 
+  handleChange = (event) =>{
+    this.setState({value: event.target.value});
+  }
 
+  handleSubmit = (event) => {
+    console.log('An essay was submitted: ' + this.state.value);
+    event.preventDefault();
+
+    if (this.drizzleStatus.initialized) {
+      const stackId = this.contracts.ethritageToken.methods.addMinter.cacheSend(
+        this.state.value
+      );
+      console.log("StackID is: ", stackId);
+      console.log("TrasnactionSTack: ", this.props.state.transactionStack[stackId]);
+      this.stackId = stackId;
+      
+    }
+  }
   render() {
     // If the data isn't here yet, show loading
     // if(!(this.dataKey in this.props.ethritage.addMinter)) {
@@ -23,32 +42,31 @@ class TokenAddMinter extends Component {
     //   )
     // }
 
-    const addMinter = () => {
-          
-    if(this.drizzleStatus.initialized){
 
-      const stackId = this.contracts.ethritageToken.methods.addMinter.cacheSend(this.minterAddress);
-      if (this.state.transactionStack[stackId]) {
-        const txHash = this.state.transactionStack[stackId]
-        this.setState({txStatus: txHash});
-        return this.state.transactions[txHash].status
-      }
+    console.log("This txStatus: ", this.txStatus);
+    if (this.props.state.transactionStack[this.stackId]) {
+      this.txHash = this.props.state.transactionStack[this.stackId];
+      console.log("Transaction Hash: ", this.txHash);
+      console.log("State tx Status: ", this.props.state.transactions[this.txHash].status);
     }
-  }
 
     // If the data is here, get it and display it
     //var data = this.props.ethritage.addMinter[this.dataKey].value
-    
+
     return (
-      <React.Fragment>
-        {this.state.txStatus}
-      </React.Fragment>
-    )
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Essay:
+          <textarea value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
   }
 }
 
 TokenAddMinter.contextTypes = {
   drizzle: PropTypes.object
-}
+};
 
 export default TokenAddMinter;
