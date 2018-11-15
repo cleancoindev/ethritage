@@ -8,6 +8,7 @@ class TokenSafeTransferFromData extends Component {
     super(props);
     this.drizzleStatus = this.props.drizzleStatus;
     this.contracts = context.drizzle.contracts;
+    this.web3 = context.drizzle.web3;
 
     this.state = {
       addressFrom: "0x0",
@@ -36,7 +37,7 @@ class TokenSafeTransferFromData extends Component {
 
     if (this.drizzleStatus.initialized) {
       const stackId = this.contracts.ethritageToken.methods.safeTransferFrom.cacheSend(
-        this.state.addressFrom, this.state.addressTo, this.state.tokenId, this.state.data
+        this.state.addressFrom, this.state.addressTo, this.state.tokenId, this.web3.utils.fromAscii(this.state.data)
       );
       console.log("StackID is: ", stackId);
       console.log("TrasnactionSTack: ", this.props.state.transactionStack[stackId]);

@@ -20,6 +20,8 @@ import {
   TokenMint,
   TokenMintWithURI,
   TokenTransferFrom,
+  TokenSafeTransferFrom,
+  TokenSafeTransferFromData,
 } from "../token/index";
 
 class Home extends Component {
@@ -90,6 +92,14 @@ class Home extends Component {
           <br/>
           Token Transfer From: 
           <TokenTransferFrom/>
+          <br />
+          <br />
+          Safe Transfer From: 
+          <TokenSafeTransferFrom/>
+          <br />
+          <br />
+          Safe Transfer From w/Data: 
+          <TokenSafeTransferFromData/>
           <br />
           <br />
           safeTransferFrom, SafeTransferFromBytes, renounceMinter,
