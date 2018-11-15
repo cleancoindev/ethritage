@@ -17,6 +17,7 @@ import {
   TokenAddMinter,
   TokenApprove,
   TokenSetApprovalForAll,
+  TokenMint,
 } from "../token/index";
 
 class Home extends Component {
@@ -62,8 +63,11 @@ class Home extends Component {
         Set Approval For All: <TokenSetApprovalForAll />
         <br/>
         <br/>
-
-        transferFrom, setApprovalForAll, safeTransferFrom, SafeTransferFromBytes, renounceMinter, mintWithTokenURI, mint, 
+        Mint Token: <TokenMint />
+        <br/>
+        <br/>
+        
+        transferFrom, safeTransferFrom, SafeTransferFromBytes, renounceMinter, mintWithTokenURI, mint, 
         
         
         </div>

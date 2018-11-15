@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 //import styles from "./styles.css";
 
-class TokenSetApprovalForAll extends Component {
+class TokenMint extends Component {
   constructor(props, context) {
     super(props);
     this.drizzleStatus = this.props.drizzleStatus;
@@ -11,7 +11,7 @@ class TokenSetApprovalForAll extends Component {
 
     this.state = {
       address: "0x0",
-      bool: true,
+      tokenId: 0,
     };
     this.stackId = 0;
     this.txHash = "";
@@ -19,7 +19,8 @@ class TokenSetApprovalForAll extends Component {
 
   handleChange = (event) =>{
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    //const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
     const name = target.name;
 
     this.setState({
@@ -28,12 +29,12 @@ class TokenSetApprovalForAll extends Component {
   }
 
   handleSubmit = (event) => {
-    console.log('approve submited: ',  this.state.address, " tokenId ", this.state.bool);
+    console.log('Mint: ',  this.state.address, " tokenId ", this.state.tokenId);
     event.preventDefault();
 
     if (this.drizzleStatus.initialized) {
-      const stackId = this.contracts.ethritageToken.methods.setApprovalForAll.cacheSend(
-        this.state.address, this.state.bool
+      const stackId = this.contracts.ethritageToken.methods.mint.cacheSend(
+        this.state.address, this.state.tokenId
       );
       console.log("StackID is: ", stackId);
       console.log("TrasnactionSTack: ", this.props.state.transactionStack[stackId]);
@@ -65,15 +66,15 @@ class TokenSetApprovalForAll extends Component {
       <form onSubmit={this.handleSubmit}>
       <br/>
         <label>
-          Address:
+          Address to Mint To:
           <input type="text" name="address" value={this.state.address} onChange={this.handleChange} />
         </label><br/>
         <label>
-          Approve All: 
+          TokenID: 
         <input
-            name="bool"
-            type="checkbox"
-            checked={this.state.bool}
+            name="tokenId"
+            type="number"
+            checked={this.state.tokenId}
             onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
@@ -84,8 +85,8 @@ class TokenSetApprovalForAll extends Component {
   }
 }
 
-TokenSetApprovalForAll.contextTypes = {
+TokenMint.contextTypes = {
   drizzle: PropTypes.object
 };
 
-export default TokenSetApprovalForAll;
+export default TokenMint;

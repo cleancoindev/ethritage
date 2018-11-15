@@ -13,6 +13,7 @@ import BalanceOfAddress from './BalanceOfAddress/BalanceOfAddressContainer';
 import TokenAddMinter from './TokenAddMinter/TokenByIndexContainer';
 import TokenApprove from './TokenApprove/TokenApproveContainer';
 import TokenSetApprovalForAll from './TokenSetApprovalForAll/TokenSetApprovalForAllContainer';
+import TokenMint from './TokenMint/TokenMintContainer'
 
 export {
   BalanceOfTokenContainer,
@@ -29,5 +30,6 @@ export {
   BalanceOfAddress,
   TokenAddMinter,
   TokenApprove,
-  TokenSetApprovalForAll
+  TokenSetApprovalForAll,
+  TokenMint
 };
