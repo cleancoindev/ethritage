@@ -22,6 +22,7 @@ import {
   TokenTransferFrom,
   TokenSafeTransferFrom,
   TokenSafeTransferFromData,
+  TokenRenounceMinter,
 } from "../token/index";
 
 class Home extends Component {
@@ -102,7 +103,8 @@ class Home extends Component {
           <TokenSafeTransferFromData/>
           <br />
           <br />
-          safeTransferFrom, SafeTransferFromBytes, renounceMinter,
+          RenounceMinter: 
+          <TokenRenounceMinter/>
         </div>
       </main>
     );

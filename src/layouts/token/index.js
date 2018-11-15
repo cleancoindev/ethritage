@@ -18,6 +18,7 @@ import TokenMintWithURI from "./TokenMintWithURI/TokenMintWithURIContainer";
 import TokenTransferFrom from "./TokenTransferFrom/TokenTransferFromContainer";
 import TokenSafeTransferFrom from "./TokenSafeTransferFrom/TokenSafeTransferFromContainer";
 import TokenSafeTransferFromData from "./TokenSafeTransferFromData/TokenSafeTransferFromDataContainer"
+import TokenRenounceMinter from "./TokenRenounceMinter/TokenRenounceMinterContainer";
 
 export {
   BalanceOfTokenContainer,
@@ -39,5 +40,6 @@ export {
   TokenMintWithURI,
   TokenTransferFrom,
   TokenSafeTransferFrom,
-  TokenSafeTransferFromData
+  TokenSafeTransferFromData,
+  TokenRenounceMinter
 };

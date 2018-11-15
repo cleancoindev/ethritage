@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 
 //import styles from "./styles.css";
 
-class TokenAddMinter extends Component {
+class TokenRenounceMinter extends Component {
   constructor(props, context) {
     super(props);
     this.drizzleStatus = this.props.drizzleStatus;
     this.contracts = context.drizzle.contracts;
 
     this.state = {
-      value: "0x0"
     };
     this.stackId = 0;
     this.txHash = "";
@@ -21,13 +20,11 @@ class TokenAddMinter extends Component {
   }
 
   handleSubmit = (event) => {
-    console.log('An essay was submitted: ' + this.state.value);
+    console.log('Renouncing:  ');
     event.preventDefault();
 
     if (this.drizzleStatus.initialized) {
-      const stackId = this.contracts.ethritageToken.methods.addMinter.cacheSend(
-        this.state.value
-      );
+      const stackId = this.contracts.ethritageToken.methods.renounceMinter.cacheSend();
       console.log("StackID is: ", stackId);
       console.log("TrasnactionSTack: ", this.props.state.transactionStack[stackId]);
       this.stackId = stackId;
@@ -56,10 +53,6 @@ class TokenAddMinter extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          MinterAddress:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
         <input type="submit" value="Submit" />
         Transanction Hash: {this.txHash}
       </form>
@@ -68,8 +61,8 @@ class TokenAddMinter extends Component {
   }
 }
 
-TokenAddMinter.contextTypes = {
+TokenRenounceMinter.contextTypes = {
   drizzle: PropTypes.object
 };
 
-export default TokenAddMinter;
+export default TokenRenounceMinter;
