@@ -18,7 +18,8 @@ import {
   TokenApprove,
   TokenSetApprovalForAll,
   TokenMint,
-  TokenMintWithURI
+  TokenMintWithURI,
+  TokenTransferFrom,
 } from "../token/index";
 
 class Home extends Component {
@@ -85,10 +86,13 @@ class Home extends Component {
           <br />
           Mint Token With URI: <br />
           <TokenMintWithURI />
+          <br/>
+          <br/>
+          Token Transfer From: 
+          <TokenTransferFrom/>
           <br />
           <br />
-          transferFrom, safeTransferFrom, SafeTransferFromBytes, renounceMinter,
-          mintWithTokenURI, mint,
+          safeTransferFrom, SafeTransferFromBytes, renounceMinter,
         </div>
       </main>
     );
