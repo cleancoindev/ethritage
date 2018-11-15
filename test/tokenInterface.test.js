@@ -25,12 +25,12 @@ describe("tokenInterface", () => {
     limit: 2100000
   };
 
-  const {keypair} = require('../secrets');
+  const keypair = require('../secrets');
 
   const contractInstance = {
-    contractBuild: require("../build/contracts/erc721-Interface"),
-    contractABI: require("../build/contracts/erc721-Interface").abi,
-    contractAddress: require("../build/contracts/erc721-Interface").networks[networkId]
+    contractBuild: require("../build/contracts/ethritageToken"),
+    contractABI: require("../build/contracts/ethritageToken").abi,
+    contractAddress: require("../build/contracts/ethritageToken").networks[networkId]
       .address
   };
 
