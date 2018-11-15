@@ -43,11 +43,12 @@ class TokenAddMinter extends Component {
     // }
 
 
-    console.log("This txStatus: ", this.txStatus);
+    
     if (this.props.state.transactionStack[this.stackId]) {
       this.txHash = this.props.state.transactionStack[this.stackId];
-      console.log("Transaction Hash: ", this.txHash);
-      console.log("State tx Status: ", this.props.state.transactions[this.txHash].status);
+      // console.log("Transaction Hash: ", this.txHash);
+      // console.log("State tx Status: ", this.props.state.transactions[this.txHash].status);
+      // console.log("This txStatus: ", this.props.state.transactions[this.txHash]);
     }
 
     // If the data is here, get it and display it
@@ -56,11 +57,13 @@ class TokenAddMinter extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Essay:
-          <textarea value={this.state.value} onChange={this.handleChange} />
+          MinterAddress:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
+        Transanction Hash: {this.txHash}
       </form>
+
     );
   }
 }
