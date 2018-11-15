@@ -18,6 +18,7 @@ import {
   TokenApprove,
   TokenSetApprovalForAll,
   TokenMint,
+  TokenMintWithURI
 } from "../token/index";
 
 class Home extends Component {
@@ -37,39 +38,57 @@ class Home extends Component {
           <br />
           Token URI of Token (1): <TokenURI tokenId={1} />
           <br />
-          TokenID of Owner by Index: (1) (address: 0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43)
+          TokenID of Owner by Index: (1) (address:
+          0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43)
           <TokenOfOwnerByIndex
             address={"0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43"}
             tokenIndex={1}
-          /><br/>
-          Token by Index (1): <TokenByIndex tokenIndex={1}/>
+          />
           <br />
-          Token Owner of TokenId(1): <TokenOwnerOf tokenId={1}/>
+          Token by Index (1): <TokenByIndex tokenIndex={1} />
           <br />
-          Is This (address: 0x2ca4488037250f9453032aa8de9be5786c5c178b) Minter? <TokenIsMinter address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"}/><br/>
-          Is this Operator Approved for all? <TokenIsApprovedForAll owner={"0x2ca4488037250f9453032aa8de9be5786c5c178b"} operator={"0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43"} />
-          <br/>
-          GetWhoIsApproved tokenid(1): <TokenGetApproved tokenId={1}/><br/>
-          Get Balance of Address: (address: 0x2ca4488037250f9453032aa8de9be5786c5c178b) <BalanceOfAddress address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"} />
-        <br/>
-        <br/>
-        Adding A minter (0x4A3EAeA9f76E26084520926EeC8fCd90d1F08a69): <TokenAddMinter/>
-        <br/>
-        <br/>
-        <br/>
-        Approve Token: <TokenApprove />
-        <br/>
-        <br/>
-        Set Approval For All: <TokenSetApprovalForAll />
-        <br/>
-        <br/>
-        Mint Token: <TokenMint />
-        <br/>
-        <br/>
-        
-        transferFrom, safeTransferFrom, SafeTransferFromBytes, renounceMinter, mintWithTokenURI, mint, 
-        
-        
+          Token Owner of TokenId(1): <TokenOwnerOf tokenId={1} />
+          <br />
+          Is This (address: 0x2ca4488037250f9453032aa8de9be5786c5c178b) Minter?{" "}
+          <TokenIsMinter
+            address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"}
+          />
+          <br />
+          Is this Operator Approved for all?{" "}
+          <TokenIsApprovedForAll
+            owner={"0x2ca4488037250f9453032aa8de9be5786c5c178b"}
+            operator={"0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43"}
+          />
+          <br />
+          GetWhoIsApproved tokenid(1): <TokenGetApproved tokenId={1} />
+          <br />
+          Get Balance of Address: (address:
+          0x2ca4488037250f9453032aa8de9be5786c5c178b){" "}
+          <BalanceOfAddress
+            address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"}
+          />
+          <br />
+          <br />
+          Adding A minter (0x4A3EAeA9f76E26084520926EeC8fCd90d1F08a69):{" "}
+          <TokenAddMinter />
+          <br />
+          <br />
+          <br />
+          Approve Token: <TokenApprove />
+          <br />
+          <br />
+          Set Approval For All: <TokenSetApprovalForAll />
+          <br />
+          <br />
+          Mint Token: <TokenMint />
+          <br />
+          <br />
+          Mint Token With URI: <br />
+          <TokenMintWithURI />
+          <br />
+          <br />
+          transferFrom, safeTransferFrom, SafeTransferFromBytes, renounceMinter,
+          mintWithTokenURI, mint,
         </div>
       </main>
     );

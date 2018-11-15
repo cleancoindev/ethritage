@@ -14,6 +14,7 @@ import TokenAddMinter from './TokenAddMinter/TokenByIndexContainer';
 import TokenApprove from './TokenApprove/TokenApproveContainer';
 import TokenSetApprovalForAll from './TokenSetApprovalForAll/TokenSetApprovalForAllContainer';
 import TokenMint from './TokenMint/TokenMintContainer'
+import TokenMintWithURI from './TokenMintWithURI/TokenMintWithURIContainer'
 
 export {
   BalanceOfTokenContainer,
@@ -31,5 +32,6 @@ export {
   TokenAddMinter,
   TokenApprove,
   TokenSetApprovalForAll,
-  TokenMint
+  TokenMint,
+  TokenMintWithURI,
 };
