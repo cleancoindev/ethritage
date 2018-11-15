@@ -49,6 +49,8 @@ class Home extends Component {
           Get Balance of Address: (address: 0x2ca4488037250f9453032aa8de9be5786c5c178b) <BalanceOfAddress address={"0x2ca4488037250f9453032aa8de9be5786c5c178b"} />
         <br/>
         <br/>
+        <br/>
+        
         transferFrom, setApprovalForAll, safeTransferFrom, SafeTransferFromBytes, renounceMinter, mintWithTokenURI, mint, approve, addminter
         
         
