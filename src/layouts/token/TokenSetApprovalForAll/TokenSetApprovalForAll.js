@@ -10,9 +10,8 @@ class TokenSetApprovalForAll extends Component {
     this.contracts = context.drizzle.contracts;
 
     this.state = {
-      value: "demostuff",
       address: "0x0",
-      bool: false,
+      bool: true,
     };
     this.stackId = 0;
     this.txHash = "";
@@ -74,7 +73,7 @@ class TokenSetApprovalForAll extends Component {
             name="bool"
             type="checkbox"
             checked={this.state.bool}
-            onChange={this.handleInputChange} />
+            onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
         Transanction Hash: {this.txHash}
