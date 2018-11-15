@@ -56,8 +56,11 @@ class Home extends Component {
         <br/>
         <br/>
         Approve Token: <TokenApprove />
+        <br/>
+        <br/>
 
-        transferFrom, setApprovalForAll, safeTransferFrom, SafeTransferFromBytes, renounceMinter, mintWithTokenURI, mint, approve, 
+
+        transferFrom, setApprovalForAll, safeTransferFrom, SafeTransferFromBytes, renounceMinter, mintWithTokenURI, mint, 
         
         
         </div>
