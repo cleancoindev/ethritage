@@ -25,18 +25,12 @@ describe("tokenInterface", () => {
     limit: 2100000
   };
 
-  const keypair = {
-    memonic:
-      "detail august fragile luggage coyote home trap veteran witness result feed blade",
-    myAddress: "0x2cA4488037250f9453032aA8dE9bE5786c5c178B",
-    privateKey:
-      "62b8292bc6e27d594b7bf4f71bcb79c85e26cd506704c3f14d21ed1e17cfd9d3"
-  };
+  const {keypair} = require('../secrets');
 
   const contractInstance = {
-    contractBuild: require("../build/contracts/testToken"),
-    contractABI: require("../build/contracts/testToken").abi,
-    contractAddress: require("../build/contracts/testToken").networks[networkId]
+    contractBuild: require("../build/contracts/erc721-Interface"),
+    contractABI: require("../build/contracts/erc721-Interface").abi,
+    contractAddress: require("../build/contracts/erc721-Interface").networks[networkId]
       .address
   };
 
