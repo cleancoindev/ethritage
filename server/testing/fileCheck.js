@@ -3,6 +3,13 @@ var fs = require("fs");
 var md5 = require("md5");
 var path = require("path");
 
+const IPFS = require('ipfs')
+const IPFSnode = new IPFS()
+
+IPFSnode.on('ready', () => {
+  console.log("IPFS READY: ");
+})
+
 ///Token Interface
 const TokenInterface = require("../erc721-Interface");
 
@@ -73,7 +80,7 @@ watcher
 watcher.on("add", async filePath => {
   console.log("The FilePath is: ", filePath);
   const jpegData = fs.readFileSync(filePath);
-  const fileHash = await md5(jpegData);
+  //const finalHash = await md5(jpegData);
   const parser = Parser.create(jpegData);
 
   const image = await Jimp.read(jpegData);
@@ -84,11 +91,37 @@ watcher.on("add", async filePath => {
 
   let result;
 
- await mintIt(fileHash);
+  const tokenObject = {
+    hiRes: "",
+    lowRes: "",
+    exif: {}
+  }
+  const ipfsImage1 = await IPFSnode.files.add(jpegData);
+  const ipfsImage2 = await IPFSnode.files.add(image2);
+
+  console.log("IPFS -> High: ", ipfsImage1);
+  console.log("IPFS -> Low: ", ipfsImage2);
+
+  tokenObject.hiRes = ipfsImage1;
+  tokenObject.lowRes = ipfsImage2;
+
+let finalHash;
+
+
 
   try {
     result = await parser.parse();
-    console.log("Parsed Data is: ", result);
+    //console.log("Parsed Data is: ", result);
+
+    tokenObject.exif = result;
+    console.log("");
+    console.log("Object is: ", tokenObject);
+  
+    finalHash = await IPFSnode.files.add(Buffer.from(JSON.stringify(tokenObject), 'utf8'));
+    finalHash = finalHash[0].hash;
+
+    console.log("Final Hash Is: ", finalHash);
+
   } catch (err) {
     // got invalid data, handle error
     console.log(err);
@@ -97,11 +130,11 @@ watcher.on("add", async filePath => {
   let filePathArray = filePath.split("/");
   console.log("FILE PATH ARRAY", filePathArray);
   let fileName = filePathArray[1].split(".");
-  let newFileName = `${fileName[0]}_${fileHash}.${fileName[1]}`;
+  let newFileName = `${fileName[0]}_${finalHash}.${fileName[1]}`;
 
-  mkdirSync(`./finished/${fileHash}/`);
+  mkdirSync(`./finished/${finalHash}/`);
 
-  fs.rename(filePath, `./finished/${fileHash}/${fileName[0]}_${fileHash}.${image.getExtension()}`, function(
+  fs.rename(filePath, `./finished/${finalHash}/${fileName[0]}_${finalHash}.${image.getExtension()}`, function(
     err
   ) {
     if (err) throw err;
@@ -109,18 +142,19 @@ watcher.on("add", async filePath => {
   });
 
   fs.writeFile(
-    `./finished/${fileHash}/${fileName[0]}_${fileHash}.txt`,
-    JSON.stringify(result),
+    `./finished/${finalHash}/${fileName[0]}_${finalHash}.txt`,
+    JSON.stringify(tokenObject),
     err => {
       console.log(err);
     }   
   );
 
 
-
-
-let smallfile = `./finished/${fileHash}/${fileName[0]}_small_${fileHash}.` + image2.getExtension();
+let smallfile = `./finished/${finalHash}/${fileName[0]}_small_${finalHash}.` + image2.getExtension();
 image2.write(smallfile);
+
+
+await mintIt(finalHash);
 
 });
 
