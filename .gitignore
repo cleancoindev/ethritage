@@ -3,6 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=node
 
 secrets.js
+/Users/dennisonbertram/Documents/ethritage/server/test1.js
 ### Node ###
 # Logs
 logs
