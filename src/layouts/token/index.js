@@ -19,6 +19,7 @@ import TokenTransferFrom from "./TokenTransferFrom/TokenTransferFromContainer";
 import TokenSafeTransferFrom from "./TokenSafeTransferFrom/TokenSafeTransferFromContainer";
 import TokenSafeTransferFromData from "./TokenSafeTransferFromData/TokenSafeTransferFromDataContainer"
 import TokenRenounceMinter from "./TokenRenounceMinter/TokenRenounceMinterContainer";
+import ListAllTokens from './ListAllTokens/ListAllTokensContainer'
 
 export {
   BalanceOfTokenContainer,
@@ -41,5 +42,6 @@ export {
   TokenTransferFrom,
   TokenSafeTransferFrom,
   TokenSafeTransferFromData,
-  TokenRenounceMinter
+  TokenRenounceMinter,
+  ListAllTokens
 };

@@ -14,7 +14,6 @@ class TotalSupply extends Component {
     this.dataKey = this.contracts.ethritageToken.methods.totalSupply.cacheCall();
   }
 
-  //ethritageToken.methods[""TotalSupply(address)""].cacheCall
 
   render() {
     // If the data isn't here yet, show loading

@@ -23,6 +23,7 @@ import {
   TokenSafeTransferFrom,
   TokenSafeTransferFromData,
   TokenRenounceMinter,
+  ListAllTokens
 } from "../token/index";
 
 class Home extends Component {
@@ -30,6 +31,11 @@ class Home extends Component {
     return (
       <main className="container">
         <div className="pure-u-1-1">
+
+        <h3>Testing Token Supply</h3>
+        <ListAllTokens/>
+        <br/>
+        <br/>
           <h2>Active Account</h2>
           <AccountData accountIndex="0" units="ether" precision="3" />
           Total Token Supply: <TotalSupplyContainer />
@@ -40,7 +46,7 @@ class Home extends Component {
           <br />
           Token Symbol: <TokenSymbol />
           <br />
-          Token URI of Token (1): <TokenURI tokenId={1} />
+          Token URI of Token (1): <TokenURI tokenId={3} />
           <br />
           TokenID of Owner by Index: (1) (address:
           0xC2cE5805dDCa2895497fF41c5f2eF5ef93BaeC43)
