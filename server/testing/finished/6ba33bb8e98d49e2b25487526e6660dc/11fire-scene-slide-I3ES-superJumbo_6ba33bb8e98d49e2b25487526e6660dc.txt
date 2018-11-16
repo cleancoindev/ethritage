@@ -1,0 +1,1 @@
+{"startMarker":{"offset":0},"tags":{},"imageSize":{"height":1366,"width":2048}}

@@ -4,7 +4,7 @@ var md5 = require("md5");
 var path = require("path");
 
 ///Token Interface
-const TokenInterface = require("../server/tokenInterface");
+const TokenInterface = require("../erc721-Interface");
 
 const Web3 = require("web3");
 const HDWalletProvider = require("truffle-hdwallet-provider");
@@ -21,12 +21,12 @@ const gas = {
     limit: 2100000
   };
 
-  const keypair = require('../../secrets').keypair;
+  const keypair = require('../../secrets');
 
   const contractInstance = {
-    contractBuild: require("../build/contracts/testToken"),
-    contractABI: require("../build/contracts/testToken").abi,
-    contractAddress: require("../build/contracts/testToken").networks[networkId]
+    contractBuild: require("../../build/contracts/ethritageToken.json"),
+    contractABI: require("../../build/contracts/ethritageToken.json").abi,
+    contractAddress: require("../../build/contracts/ethritageToken.json").networks[networkId]
       .address
   };
 
