@@ -97,7 +97,9 @@ watcher.on("add", async filePath => {
     exif: {}
   }
   const ipfsImage1 = await IPFSnode.files.add(jpegData);
-  const ipfsImage2 = await IPFSnode.files.add(image2);
+
+  let image2buffer = await image2.getBufferAsync(Jimp.MIME_JPEG);
+  const ipfsImage2 = await IPFSnode.files.add(image2buffer);
 
   console.log("IPFS -> High: ", ipfsImage1);
   console.log("IPFS -> Low: ", ipfsImage2);
