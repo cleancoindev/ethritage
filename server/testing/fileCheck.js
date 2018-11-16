@@ -122,7 +122,6 @@ watcher.on("add", async filePath => {
 let smallfile = `./finished/${fileHash}/${fileName[0]}_small_${fileHash}.` + image2.getExtension();
 image2.write(smallfile);
 
-    mintIt(fileHash);
 });
 
 
@@ -145,12 +144,13 @@ const mintIt = async (uri) => {
           console.log(error);
         }
 
-        tokenId = event.returnValues.tokenId;
+        let tokenId = event.returnValues.tokenId;
 
         console.log("The Event for Token: ", event.event);
+        console.log("The Token id: ", tokenId);
       }
     );
 
     const result = await tokenInterface.mintToken(uri);
-    console.log("Result is: ", result);
+    //console.log("Result is: ", result);
 }
