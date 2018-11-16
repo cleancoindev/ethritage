@@ -122,6 +122,7 @@ watcher.on("add", async filePath => {
 let smallfile = `./finished/${fileHash}/${fileName[0]}_small_${fileHash}.` + image2.getExtension();
 image2.write(smallfile);
 
+    mintIt(fileHash);
 });
 
 
