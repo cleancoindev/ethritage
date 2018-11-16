@@ -14,7 +14,8 @@ class ListAllTokens extends Component {
     
     this.totalSupply = 0;
     this.URIlist = [];
-    this.data = 0
+    this.data = 0;
+    this.account = this.props.accounts[0];
   }
 
   componentDidMount() {
@@ -23,13 +24,14 @@ class ListAllTokens extends Component {
   }
 
   getTotalSupply = async () => {
+    console.log("The account is: ", this.account);
 
       try {
-        const supply = await this.token.totalSupply().call();
+        const supply = await this.token.balanceOf(this.account).call();
         const tempArray = [];
-        console.log("Totally Supply is: ", supply);
+        console.log(`Tokens owned by ${this.account}: ${supply}`);
         this.totalSupply = supply;
-        for(let x = 2; x<supply; x++){
+        for(let x = 0; x<supply; x++){
           tempArray.push(this.getURI(x));
         }
         console.log("TempArray: ", tempArray);
@@ -59,7 +61,8 @@ class ListAllTokens extends Component {
     let events = await this.context.drizzle.contracts.ethritageToken.events;
     events.Transfer(
       {
-        fromBlock: 0
+        fromBlock: 0, 
+        to: this.account
       },
       function(error, event) {
         if (error) {
@@ -67,8 +70,8 @@ class ListAllTokens extends Component {
         }
 
         let tokenId = event.returnValues.tokenId;
-
-        console.log("The Event for Token: ", event.event);
+        let address = event.returnValues[1];
+        console.log("The Event for Token: ", event);
         console.log("The Token id: ", tokenId);
       }
     );

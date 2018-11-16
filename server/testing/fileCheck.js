@@ -1,10 +1,9 @@
-var chokidar = require("chokidar");
-var fs = require("fs");
-var md5 = require("md5");
-var path = require("path");
-
+const chokidar = require("chokidar");
+const fs = require("fs");
+const path = require("path");
 const IPFS = require('ipfs')
 const IPFSnode = new IPFS()
+
 
 IPFSnode.on('ready', () => {
   console.log("IPFS READY: ");
@@ -57,19 +56,19 @@ const gas = {
 const Jimp = require("jimp");
 Jimp.RESIZE_HERMITE;
 
-var Parser = require("exif-parser");
+const Parser = require("exif-parser");
 
 
 let files = [];
 
-var watcher = chokidar.watch("./testFolder", {
+const watcher = chokidar.watch("./testFolder", {
   ignored: /(^|[\/\\])\../,
   persistent: true
 });
 
 // Something to use when events are received.
 
-var log = console.log.bind(console);
+const log = console.log.bind(console);
 
 // Add event listeners.
 watcher
