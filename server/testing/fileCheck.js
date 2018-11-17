@@ -51,6 +51,7 @@ const watchedFolder = "./testFolder";
 
 IPFSnode.on("ready", () => {
   console.log("IPFS READY: ");
+  watchFile();
 });
 
 const watcher = chokidar.watch(watchedFolder, {
@@ -63,9 +64,9 @@ const watcher = chokidar.watch(watchedFolder, {
 const log = console.log.bind(console);
 
 // Add event listeners.
-watcherGeneral();
+//watcherGeneral();
 
-watchFile();
+
 
 const mkdirSync = function(dirPath) {
   try {
@@ -107,7 +108,7 @@ function watchFile() {
     instance.hiResImage = _jpegData;
 
     //------------ // Parse the Image for Exif Data // ------------//
-    const parser = Parser.create(instance.jpegData);
+    const parser = Parser.create(instance.hiResImage);
     const _imageExifData = await parser.parse();
     instance.imageExifData = _imageExifData;
 
@@ -131,7 +132,7 @@ function watchFile() {
     };
     tokenObject.exif = instance.imageExifData;
 
-    const ipfsImageHiResHash = await IPFSnode.files.add(instance.jpegData);
+    const ipfsImageHiResHash = await IPFSnode.files.add(instance.hiResImage);
     const ipfsImageThumbnailHash = await IPFSnode.files.add(instance.lowResImage);
 
     console.log("IPFS -> High: ", ipfsImageHiResHash);
@@ -147,19 +148,32 @@ function watchFile() {
     
     const fileName = filePathArray[1].split(".");
     const newFileName = `${fileName[0]}_${instance.finalHash}.${fileName[1]}`;
+
     mkdirSync(`./finished/${instance.finalHash}/`);
-    fs.rename(filePath, `./finished/${instance.finalHash}/${fileName[0]}_${instance.finalHash}.${image.getExtension()}`, function (err) {
-      if (err)
-        throw err;
-      console.log("Move complete.");
-    });
-    fs.writeFile(`./finished/${instance.finalHash}/${fileName[0]}_${instance.finalHash}.txt`, JSON.stringify(tokenObject), err => {
-      console.log(err);
-    });
+
+    moveFile(filePath, instance, fileName, image_temp);
+
+    writeMetaDataToDisk(instance, fileName, tokenObject);
+
     let smallfile = `./finished/${instance.finalHash}/${fileName[0]}_small_${instance.finalHash}.` +
       imageThumbnail.getExtension();
     imageThumbnail.write(smallfile);
+
     await mintIt(instance.finalHash);
+  });
+}
+
+function writeMetaDataToDisk(instance, fileName, tokenObject) {
+  fs.writeFile(`./finished/${instance.finalHash}/${fileName[0]}_${instance.finalHash}.txt`, JSON.stringify(tokenObject), err => {
+    console.log(err);
+  });
+}
+
+function moveFile(filePath, instance, fileName, image_temp) {
+  fs.rename(filePath, `./finished/${instance.finalHash}/${fileName[0]}_${instance.finalHash}.${image_temp.getExtension()}`, function (err) {
+    if (err)
+      throw err;
+    console.log("Move complete.");
   });
 }
 
