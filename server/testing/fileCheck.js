@@ -14,7 +14,7 @@ Jimp.RESIZE_HERMITE;
 const qualitySettings = {
   quality: 70,
   resize: 250
-}
+};
 
 //------------ // Token Management // ------------//
 const TokenInterface = require("../erc721-Interface");
@@ -66,8 +66,6 @@ const log = console.log.bind(console);
 // Add event listeners.
 //watcherGeneral();
 
-
-
 const mkdirSync = function(dirPath) {
   try {
     fs.mkdirSync(dirPath);
@@ -77,63 +75,89 @@ const mkdirSync = function(dirPath) {
 };
 
 const mintIt = async uri => {
-
-  
   try {
-
-    console.log("Creating a Subscription to Events...")
+    console.log("Creating a Subscription to Events...");
     let events = await tokenInterface.subscribeToContractEvents();
     console.log("Events: ", events);
     console.log("Subscription Created...");
     blockchainSubscription(events);
     console.log("Minting Token...");
-   await tokenInterface.mintToken(uri);
-  
+    await tokenInterface.mintToken(uri);
   } catch (error) {
     console.log("MintIt Error: ", error);
   }
-
 };
 
 function blockchainSubscription(events) {
-  events.Transfer({
-    fromBlock: 0
-  }, function (error, event) {
-    if (error) {
-      console.log(error);
+  events.Transfer(
+    {
+      fromBlock: 0
+    },
+    function(error, event) {
+      if (error) {
+        console.log(error);
+      }
+      let tokenId = event.returnValues.tokenId;
+      console.log("The Event for Token: ", event.event);
+      console.log("The Token id: ", tokenId);
     }
-    let tokenId = event.returnValues.tokenId;
-    console.log("The Event for Token: ", event.event);
-    console.log("The Token id: ", tokenId);
-  });
+  );
 
-  events.Approval({
-    fromBlock: 0
-  }, function (error, event) {
-    if (error) {
-      console.log(error);
+  events.Approval(
+    {
+      fromBlock: 0
+    },
+    function(error, event) {
+      if (error) {
+        console.log(error);
+      }
+      //let tokenId = event.returnValues.tokenId;
+      console.log("The Event for Approval: ", event.event);
     }
-    //let tokenId = event.returnValues.tokenId;
-    console.log("The Event for Approval: ", event.event);
-   
-  });
+  );
 
-  events.ApprovalForAll({
-    fromBlock: 0
-  }, function (error, event) {
-    if (error) {
-      console.log(error);
+  events.ApprovalForAll(
+    {
+      fromBlock: 0
+    },
+    function(error, event) {
+      if (error) {
+        console.log(error);
+      }
+      //let tokenId = event.returnValues.tokenId;
+      console.log("The Event for ApprovalForAll: ", event.event);
     }
-    //let tokenId = event.returnValues.tokenId;
-    console.log("The Event for ApprovalForAll: ", event.event);
-   
-  });
-  
+  );
+
+  events.MinterAdded(
+    {
+      fromBlock: 0
+    },
+    function(error, event) {
+      if (error) {
+        console.log(error);
+      }
+      //let tokenId = event.returnValues.tokenId;
+      console.log("The Event for MinterAdded: ", event.event);
+    }
+  );
+
+  events.MinterRemoved(
+    {
+      fromBlock: 0
+    },
+    function(error, event) {
+      if (error) {
+        console.log(error);
+      }
+      //let tokenId = event.returnValues.tokenId;
+      console.log("The Event for MinterRemoved: ", event.event);
+    }
+  );
 }
 
 function watchFile() {
-  watcher.on("add", async (filePath) => {
-
+  watcher.on("add", async filePath => {
     console.log("File Detected....");
     const instance = {};
 
@@ -151,7 +175,7 @@ function watchFile() {
     //------------ // Clone Image // ------------//
     const image_temp = await Jimp.read(instance.hiResImage);
     const imageThumbnail = image_temp.clone();
-    
+
     //------------ // Resize Image // ------------//
     imageThumbnail.quality(qualitySettings.quality);
     imageThumbnail.resize(qualitySettings.resize, Jimp.AUTO);
@@ -159,7 +183,9 @@ function watchFile() {
     console.log("Image ThumbNail Created...");
 
     //------------ // Convert Thumbnail Image into a Buffer // ------------//
-    const _imageThumbnailbuffer = await imageThumbnail.getBufferAsync(Jimp.MIME_JPEG);
+    const _imageThumbnailbuffer = await imageThumbnail.getBufferAsync(
+      Jimp.MIME_JPEG
+    );
     instance.lowResImage = _imageThumbnailbuffer;
 
     //------------ // Hash individual Images // ------------//
@@ -175,7 +201,9 @@ function watchFile() {
     console.log("Saving to IPFS...");
 
     const ipfsImageHiResHash = await IPFSnode.files.add(instance.hiResImage);
-    const ipfsImageThumbnailHash = await IPFSnode.files.add(instance.lowResImage);
+    const ipfsImageThumbnailHash = await IPFSnode.files.add(
+      instance.lowResImage
+    );
 
     console.log("IPFS -> High: ", ipfsImageHiResHash);
     console.log("IPFS -> Low: ", ipfsImageThumbnailHash);
@@ -183,11 +211,13 @@ function watchFile() {
     tokenObject.hiRes = ipfsImageHiResHash;
     tokenObject.lowRes = ipfsImageThumbnailHash;
 
-    const _finalHash = await IPFSnode.files.add(Buffer.from(JSON.stringify(tokenObject), "utf8"));
+    const _finalHash = await IPFSnode.files.add(
+      Buffer.from(JSON.stringify(tokenObject), "utf8")
+    );
     instance.finalHash = _finalHash[0].hash;
 
     const filePathArray = filePath.split("/");
-    
+
     const fileName = filePathArray[1].split(".");
     tokenObject.originalFileName = fileName;
 
@@ -199,8 +229,10 @@ function watchFile() {
 
     writeMetaDataToDisk(instance, fileName, tokenObject);
 
-    let smallfile = `./finished/${instance.finalHash}/${fileName[0]}_small_${instance.finalHash}.` +
-      imageThumbnail.getExtension();
+    let smallfile =
+      `./finished/${instance.finalHash}/${fileName[0]}_small_${
+        instance.finalHash
+      }.` + imageThumbnail.getExtension();
     imageThumbnail.write(smallfile);
 
     await mintIt(instance.finalHash);
@@ -208,17 +240,26 @@ function watchFile() {
 }
 
 function writeMetaDataToDisk(instance, fileName, tokenObject) {
-  fs.writeFile(`./finished/${instance.finalHash}/${fileName[0]}_${instance.finalHash}.txt`, JSON.stringify(tokenObject), err => {
-    console.log(err);
-  });
+  fs.writeFile(
+    `./finished/${instance.finalHash}/${fileName[0]}_${instance.finalHash}.txt`,
+    JSON.stringify(tokenObject),
+    err => {
+      console.log(err);
+    }
+  );
 }
 
 function moveFile(filePath, instance, fileName, image_temp) {
-  fs.rename(filePath, `./finished/${instance.finalHash}/${fileName[0]}_${instance.finalHash}.${image_temp.getExtension()}`, function (err) {
-    if (err)
-      throw err;
-    console.log("Move complete.");
-  });
+  fs.rename(
+    filePath,
+    `./finished/${instance.finalHash}/${fileName[0]}_${
+      instance.finalHash
+    }.${image_temp.getExtension()}`,
+    function(err) {
+      if (err) throw err;
+      console.log("Move complete.");
+    }
+  );
 }
 
 function watcherGeneral() {
