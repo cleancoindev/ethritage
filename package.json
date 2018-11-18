@@ -72,7 +72,8 @@
     "build": "truffle compile && node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "chain": "ganache-cli",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "server" : "ganache-cli && truffle migrate --reset && node /server/testing/fileCheck.js"
   },
   "jest": {
     "collectCoverageFrom": [

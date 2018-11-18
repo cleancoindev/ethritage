@@ -77,30 +77,64 @@ const mkdirSync = function(dirPath) {
 };
 
 const mintIt = async uri => {
-  let events = await tokenInterface.subscribeToContractEvents();
-  events.Transfer(
-    {
-      fromBlock: 0
-    },
-    function(error, event) {
-      if (error) {
-        console.log(error);
-      }
 
-      let tokenId = event.returnValues.tokenId;
+  
+  try {
 
-      console.log("The Event for Token: ", event.event);
-      console.log("The Token id: ", tokenId);
-    }
-  );
-
- await tokenInterface.mintToken(uri);
+    console.log("Creating a Subscription to Events...")
+    let events = await tokenInterface.subscribeToContractEvents();
+    console.log("Events: ", events);
+    console.log("Subscription Created...");
+    blockchainSubscription(events);
+    console.log("Minting Token...");
+   await tokenInterface.mintToken(uri);
+  
+  } catch (error) {
+    console.log("MintIt Error: ", error);
+  }
 
 };
+
+function blockchainSubscription(events) {
+  events.Transfer({
+    fromBlock: 0
+  }, function (error, event) {
+    if (error) {
+      console.log(error);
+    }
+    let tokenId = event.returnValues.tokenId;
+    console.log("The Event for Token: ", event.event);
+    console.log("The Token id: ", tokenId);
+  });
+
+  events.Approval({
+    fromBlock: 0
+  }, function (error, event) {
+    if (error) {
+      console.log(error);
+    }
+    //let tokenId = event.returnValues.tokenId;
+    console.log("The Event for Approval: ", event.event);
+   
+  });
+
+  events.ApprovalForAll({
+    fromBlock: 0
+  }, function (error, event) {
+    if (error) {
+      console.log(error);
+    }
+    //let tokenId = event.returnValues.tokenId;
+    console.log("The Event for ApprovalForAll: ", event.event);
+   
+  });
+  
+}
 
 function watchFile() {
   watcher.on("add", async (filePath) => {
 
+    console.log("File Detected....");
     const instance = {};
 
     //------------ // Create a buffer from the added File // ------------//
@@ -112,6 +146,8 @@ function watchFile() {
     const _imageExifData = await parser.parse();
     instance.imageExifData = _imageExifData;
 
+    console.log("Exif Data Parsed...");
+
     //------------ // Clone Image // ------------//
     const image_temp = await Jimp.read(instance.hiResImage);
     const imageThumbnail = image_temp.clone();
@@ -120,17 +156,23 @@ function watchFile() {
     imageThumbnail.quality(qualitySettings.quality);
     imageThumbnail.resize(qualitySettings.resize, Jimp.AUTO);
 
+    console.log("Image ThumbNail Created...");
+
     //------------ // Convert Thumbnail Image into a Buffer // ------------//
     const _imageThumbnailbuffer = await imageThumbnail.getBufferAsync(Jimp.MIME_JPEG);
     instance.lowResImage = _imageThumbnailbuffer;
 
     //------------ // Hash individual Images // ------------//
     const tokenObject = {
+      timeStamp: new Date(),
+      originalFileName: "",
       hiRes: "",
       lowRes: "",
       exif: {}
     };
     tokenObject.exif = instance.imageExifData;
+
+    console.log("Saving to IPFS...");
 
     const ipfsImageHiResHash = await IPFSnode.files.add(instance.hiResImage);
     const ipfsImageThumbnailHash = await IPFSnode.files.add(instance.lowResImage);
@@ -147,6 +189,8 @@ function watchFile() {
     const filePathArray = filePath.split("/");
     
     const fileName = filePathArray[1].split(".");
+    tokenObject.originalFileName = fileName;
+
     const newFileName = `${fileName[0]}_${instance.finalHash}.${fileName[1]}`;
 
     mkdirSync(`./finished/${instance.finalHash}/`);
