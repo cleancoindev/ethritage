@@ -1,7 +1,8 @@
 const { blockchainSubscription } = require("./blockchainSubscription");
 
 const { contractInstance } = require("./contractInstance");
-const keypair = require("../../secrets");
+const keypair = require("../../secrets").keypair;
+const fireConfig = require("../../secrets").fireConfig;
 
 const chokidar = require("chokidar");
 const fs = require("fs");
@@ -11,6 +12,18 @@ const Parser = require("exif-parser");
 
 const eventLog = [];
 exports.eventLog = eventLog;
+
+const firebase = require("firebase");
+
+firebase.initializeApp(fireConfig);
+
+const admin = require('firebase-admin');
+const functions = require('firebase-functions');
+
+admin.initializeApp(functions.config().firebase);
+
+var db = admin.firestore();
+
 
 //------------ // Image Management // ------------//
 const Jimp = require("jimp");
@@ -147,7 +160,8 @@ function watchFile() {
       originalFileName: "",
       hiRes: "",
       lowRes: "",
-      exif: {}
+      exif: {},
+      selfReference: ""
     };
     tokenObject.exif = instance.imageExifData;
 
@@ -168,6 +182,7 @@ function watchFile() {
       Buffer.from(JSON.stringify(tokenObject), "utf8")
     );
     instance.finalHash = _finalHash[0].hash;
+    tokenObject.selfReference = instance.finalHash;
 
     const filePathArray = filePath.split("/");
 
@@ -181,6 +196,7 @@ function watchFile() {
     moveFile(filePath, instance, fileName, image_temp);
 
     writeMetaDataToDisk(instance, fileName, tokenObject);
+    writeMetaDataToFireBase(tokenObject);
 
     let smallfile =
       `./finished/${instance.finalHash}/${fileName[0]}_small_${
@@ -200,6 +216,13 @@ function writeMetaDataToDisk(instance, fileName, tokenObject) {
       console.log(err);
     }
   );
+}
+
+async function writeMetaDataToFireBase(tokenObject) {
+
+  // Add a new document in collection "cities" with ID 'LA'
+  var setDoc = await db.collection('processed').doc(tokenObject.selfReference).set(tokenObject);
+  console.log("SetDoc is: ", setDoc);
 }
 
 function moveFile(filePath, instance, fileName, image_temp) {
