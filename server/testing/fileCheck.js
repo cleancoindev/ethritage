@@ -1,3 +1,5 @@
+const { blockchainSubscription } = require("./blockchainSubscription");
+
 const { contractInstance } = require("./contractInstance");
 const keypair = require("../../secrets");
 
@@ -8,6 +10,7 @@ const IPFSnode = new IPFS();
 const Parser = require("exif-parser");
 
 const eventLog = [];
+exports.eventLog = eventLog;
 
 //------------ // Image Management // ------------//
 const Jimp = require("jimp");
@@ -83,7 +86,7 @@ const mintIt = async uri => {
   try {
     console.log("Creating a Subscription to Events...");
     let events = await tokenInterface.subscribeToContractEvents();
-    console.log("Events: ", events);
+   
     console.log("Subscription Created...");
     
     blockchainSubscription(events, block);
@@ -102,83 +105,6 @@ const getCurrentBlock= async () => {
     return 0;
   }
 }
-
-function blockchainSubscription(events, block) {
-
-  events.Transfer(
-    {
-      fromBlock: block
-    },
-    function(error, event) {
-      if (error) {
-        console.log(error);
-      }
-
-      eventLog.push(event);
-      let tokenId = event.returnValues.tokenId;
-      //console.log("The Event for Token: ", event.event);
-      console.log("The Event for Transfer: ", event.blockNumber)
-      console.log("The Token id: ", tokenId);
-    }
-  );
-
-  events.Approval(
-    {
-      fromBlock: block
-    },
-    function(error, event) {
-      if (error) {
-        console.log(error);
-      }
-      //let tokenId = event.returnValues.tokenId;
-      eventLog.push(event);
-      console.log("The Event for Approval: ", event);
-    }
-  );
-
-  events.ApprovalForAll(
-    {
-      fromBlock: block
-    },
-    function(error, event) {
-      if (error) {
-        console.log(error);
-      }
-      //let tokenId = event.returnValues.tokenId;
-      eventLog.push(event);
-      console.log("The Event for ApprovalForAll: ", event);
-    }
-  );
-
-  events.MinterAdded(
-    {
-      fromBlock: block
-    },
-    function(error, event) {
-      if (error) {
-        console.log(error);
-      }
-      //let tokenId = event.returnValues.tokenId;
-      eventLog.push(event);
-      console.log("The Event for MinterAdded: ", event);
-    }
-  );
-
-  events.MinterRemoved(
-    {
-      fromBlock: block
-    },
-    function(error, event) {
-      if (error) {
-        console.log(error);
-      }
-      //let tokenId = event.returnValues.tokenId;
-      eventLog.push(event);
-      console.log("The Event for MinterRemoved: ", event);
-    }
-  );
-}
-
 
 function watchFile() {
   watcher.on("add", async filePath => {
