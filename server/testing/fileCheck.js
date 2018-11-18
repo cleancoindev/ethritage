@@ -19,7 +19,7 @@ firebase.initializeApp(fireConfig);
 
 const admin = require('firebase-admin');
 //const functions = require('firebase-functions');
-var serviceAccount = require("../../secrets/ethritagedev-ff7c896e237a.json");
+var serviceAccount = require("../../secrets/ethritage-server-8bc3c0c09a45.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -27,6 +27,9 @@ admin.initializeApp({
 
 
 var db = admin.firestore();
+// const firestore = new Firestore();
+// const settings = {timestampsInSnapshots: true};
+// firestore.settings(settings);
 
 
 //------------ // Image Management // ------------//
@@ -224,9 +227,23 @@ function writeMetaDataToDisk(instance, fileName, tokenObject) {
 
 async function writeMetaDataToFireBase(tokenObject) {
 
-  // Add a new document in collection "cities" with ID 'LA'
-  var setDoc = await db.collection('processed').doc(tokenObject.selfReference).set(tokenObject);
-  console.log("SetDoc is: ", setDoc);
+  console.log("Token Object: ");
+  console.log("");
+  console.log(tokenObject);
+
+  const 
+  var addDoc = db.collection('processed').add({
+    name: 'Tokyo',
+    country: 'Japan'
+  }).then(ref => {
+    console.log('Added document with ID: ', ref.id);
+  });
+
+  // const setDoc = await db.collection('processed').add(tokenObject).then(ref => {
+  //   console.log('Added document with ID: ', ref.id);
+  // });
+
+
 }
 
 function moveFile(filePath, instance, fileName, image_temp) {
