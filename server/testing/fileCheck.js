@@ -18,9 +18,13 @@ const firebase = require("firebase");
 firebase.initializeApp(fireConfig);
 
 const admin = require('firebase-admin');
-const functions = require('firebase-functions');
+//const functions = require('firebase-functions');
+var serviceAccount = require("../../secrets/ethritagedev-ff7c896e237a.json");
 
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 
 var db = admin.firestore();
 
