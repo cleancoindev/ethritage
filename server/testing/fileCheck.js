@@ -7,6 +7,8 @@ const IPFS = require("ipfs");
 const IPFSnode = new IPFS();
 const Parser = require("exif-parser");
 
+const eventLog = [];
+
 //------------ // Image Management // ------------//
 const Jimp = require("jimp");
 Jimp.RESIZE_HERMITE;
@@ -75,12 +77,16 @@ const mkdirSync = function(dirPath) {
 };
 
 const mintIt = async uri => {
+
+  const block = await getCurrentBlock();
+  
   try {
     console.log("Creating a Subscription to Events...");
     let events = await tokenInterface.subscribeToContractEvents();
     console.log("Events: ", events);
     console.log("Subscription Created...");
-    blockchainSubscription(events);
+    
+    blockchainSubscription(events, block);
     console.log("Minting Token...");
     await tokenInterface.mintToken(uri);
   } catch (error) {
@@ -88,77 +94,98 @@ const mintIt = async uri => {
   }
 };
 
-function blockchainSubscription(events) {
+const getCurrentBlock= async () => {
+  try {
+    return await tokenInterface.getLatestBlockNumber();
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+}
+
+function blockchainSubscription(events, block) {
+
   events.Transfer(
     {
-      fromBlock: 0
+      fromBlock: block
     },
     function(error, event) {
       if (error) {
         console.log(error);
       }
+
+      eventLog.push(event);
       let tokenId = event.returnValues.tokenId;
-      console.log("The Event for Token: ", event.event);
+      //console.log("The Event for Token: ", event.event);
+      console.log("The Event for Transfer: ", event.blockNumber)
       console.log("The Token id: ", tokenId);
     }
   );
 
   events.Approval(
     {
-      fromBlock: 0
+      fromBlock: block
     },
     function(error, event) {
       if (error) {
         console.log(error);
       }
       //let tokenId = event.returnValues.tokenId;
-      console.log("The Event for Approval: ", event.event);
+      eventLog.push(event);
+      console.log("The Event for Approval: ", event);
     }
   );
 
   events.ApprovalForAll(
     {
-      fromBlock: 0
+      fromBlock: block
     },
     function(error, event) {
       if (error) {
         console.log(error);
       }
       //let tokenId = event.returnValues.tokenId;
-      console.log("The Event for ApprovalForAll: ", event.event);
+      eventLog.push(event);
+      console.log("The Event for ApprovalForAll: ", event);
     }
   );
 
   events.MinterAdded(
     {
-      fromBlock: 0
+      fromBlock: block
     },
     function(error, event) {
       if (error) {
         console.log(error);
       }
       //let tokenId = event.returnValues.tokenId;
-      console.log("The Event for MinterAdded: ", event.event);
+      eventLog.push(event);
+      console.log("The Event for MinterAdded: ", event);
     }
   );
 
   events.MinterRemoved(
     {
-      fromBlock: 0
+      fromBlock: block
     },
     function(error, event) {
       if (error) {
         console.log(error);
       }
       //let tokenId = event.returnValues.tokenId;
-      console.log("The Event for MinterRemoved: ", event.event);
+      eventLog.push(event);
+      console.log("The Event for MinterRemoved: ", event);
     }
   );
 }
 
+
 function watchFile() {
   watcher.on("add", async filePath => {
     console.log("File Detected....");
+
+    
+
     const instance = {};
 
     //------------ // Create a buffer from the added File // ------------//

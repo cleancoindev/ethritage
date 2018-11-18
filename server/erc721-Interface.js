@@ -70,6 +70,10 @@ class tokenInterface {
     return this.txIndex;
   }
 
+  async getLatestBlockNumber(){
+    return await this.web3.eth.getBlockNumber();
+  }
+
   async getTxCount() {
     const count = await this.web3.eth.getTransactionCount(this.myAddress);
     return count;
