@@ -1,12 +1,16 @@
 //Front End Feedback
 const { myEmitter } = require("./MyEmitter");
+//ImageLoader
+const loadImage = require("./loadImage");
+//Exif Parser
+const parseExif = require("./parseExif");
 //Watcher
 const chokidar = require("chokidar");
 
 
-//folder to watch
+//Variables
 const watchedFolder = "./export";
-
+const thumbnails = []
 
 
 //watcher
@@ -19,14 +23,17 @@ const watcher = chokidar.watch(watchedFolder, {
   watcher.on("add", async filePath => {
     myEmitter.emit('FileAdded', filePath);
 
+    const image = await loadImage(filePath, myEmitter);
 
-    myEmitter.emit('FileAdded', filePath);
-
-
-    myEmitter.emit('FileAdded', filePath);
+    const exif = await parseExif(image, myEmitter);
 
 
-    myEmitter.emit('FileAdded', filePath);
+
+    myEmitter.emit('ThumbNailCreated');
+
+    myEmitter.emit('SavedToIPFS');
+
+    myEmitter.emit('TokenMinted');
       
 
   })
