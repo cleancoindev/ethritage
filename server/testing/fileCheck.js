@@ -19,14 +19,14 @@ firebase.initializeApp(fireConfig);
 
 const admin = require('firebase-admin');
 //const functions = require('firebase-functions');
-var serviceAccount = require("../../secrets/ethritage-server-8bc3c0c09a45.json");
+const serviceAccount = require("../../secrets/ethritage-server-8bc3c0c09a45.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
 
-var db = admin.firestore();
+const db = admin.firestore();
 // const firestore = new Firestore();
 // const settings = {timestampsInSnapshots: true};
 // firestore.settings(settings);
@@ -203,7 +203,7 @@ function watchFile() {
     moveFile(filePath, instance, fileName, image_temp);
 
     writeMetaDataToDisk(instance, fileName, tokenObject);
-    writeMetaDataToFireBase(tokenObject);
+    //writeMetaDataToFireBase(tokenObject);
 
     let smallfile =
       `./finished/${instance.finalHash}/${fileName[0]}_small_${
@@ -225,26 +225,20 @@ function writeMetaDataToDisk(instance, fileName, tokenObject) {
   );
 }
 
-async function writeMetaDataToFireBase(tokenObject) {
+// async function writeMetaDataToFireBase(tokenObject) {
 
-  console.log("Token Object: ");
-  console.log("");
-  console.log(tokenObject);
+//   console.log("Token Object: ");
+//   console.log("");
+//   console.log(tokenObject);
 
-  const 
-  var addDoc = db.collection('processed').add({
-    name: 'Tokyo',
-    country: 'Japan'
-  }).then(ref => {
-    console.log('Added document with ID: ', ref.id);
-  });
+//   const addDoc = db.collection('processed').add({
+//     name: 'Tokyo',
+//     country: 'Japan'
+//   }).then(ref => {
+//     console.log('Added document with ID: ', ref.id);
+//   });
 
-  // const setDoc = await db.collection('processed').add(tokenObject).then(ref => {
-  //   console.log('Added document with ID: ', ref.id);
-  // });
-
-
-}
+// }
 
 function moveFile(filePath, instance, fileName, image_temp) {
   fs.rename(
