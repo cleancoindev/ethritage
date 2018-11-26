@@ -4,6 +4,10 @@ class MyEmitter extends EventEmitter {
 const myEmitter = new MyEmitter();
 exports.myEmitter = myEmitter;
 //
+
+myEmitter.on('IPFSREADY', () => {
+    console.log("IPFS Ready...");
+})
 myEmitter.on('FileAdded', (filePath) => {
     console.log(`File Detected....${filePath}`);
 });

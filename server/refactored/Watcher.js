@@ -17,6 +17,7 @@ const watchedFolder = "./export";
 const thumbnails = []
 
 IPFSnode.on("ready", () => {
+  myEmitter.emit("IPFSREADY");
   watch();
 })
 
@@ -38,7 +39,7 @@ const watch = () => {
 
     const thumbnail = await resizeImage(image, myEmitter);
 
-    const hash = await uploadToIPFS(image);
+    const hash = await uploadToIPFS(image, myEmitter);
     
 
     myEmitter.emit('SavedToIPFS');
