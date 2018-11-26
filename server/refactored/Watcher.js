@@ -14,7 +14,7 @@ const {IPFSnode, uploadToIPFS} = require("./IPFS");
 
 //Variables
 const watchedFolder = "./export";
-const thumbnails = []
+
 
 IPFSnode.on("ready", () => {
   myEmitter.emit("IPFSREADY");
@@ -39,10 +39,9 @@ const watch = () => {
 
     const thumbnail = await resizeImage(image, myEmitter);
 
-    const hash = await uploadToIPFS(image, myEmitter);
+    const imageHash = await uploadToIPFS(image, myEmitter);
+    const thumbHash = await uploadToIPFS(thumbnail, myEmitter);
     
-
-    myEmitter.emit('SavedToIPFS');
 
     myEmitter.emit('TokenMinted');
       
