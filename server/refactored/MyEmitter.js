@@ -25,7 +25,10 @@ myEmitter.on("ThumbNail_Start", () => {
 myEmitter.on("ThumbNail_Finished", () => {
     console.log("Thumbnail Created...");
 });
-myEmitter.on("SavedToIPFS", (hash) => {
+myEmitter.on("ImageSavedToIPFS", (hash) => {
+    console.log("Saved To IPFS...", hash);
+});
+myEmitter.on("ObjectSavedToIPFS", (hash) => {
     console.log("Saved To IPFS...", hash);
 });
 myEmitter.on("TokenMinted", () => {

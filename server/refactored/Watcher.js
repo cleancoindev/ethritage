@@ -9,7 +9,7 @@ const resizeImage = require("./resizeImage");
 //Watcher
 const chokidar = require("chokidar");
 //IPFS
-const {IPFSnode, uploadToIPFS} = require("./IPFS");
+const {IPFSnode, uploadImageToIPFS, uploadObjectToIPFS } = require("./IPFS");
 
 
 //Variables
@@ -39,9 +39,16 @@ const watch = () => {
 
     const thumbnail = await resizeImage(image, myEmitter);
 
-    const imageHash = await uploadToIPFS(image, myEmitter);
-    const thumbHash = await uploadToIPFS(thumbnail, myEmitter);
+    const imageHash = await uploadImageToIPFS(image, myEmitter);
+    const thumbHash = await uploadImageToIPFS(thumbnail, myEmitter);
     
+    const instance = {
+      imageHash,
+      thumbHash,
+      exif
+    }
+
+    const instanceHash = await uploadObjectToIPFS(instance, myEmitter);
 
     myEmitter.emit('TokenMinted');
       
