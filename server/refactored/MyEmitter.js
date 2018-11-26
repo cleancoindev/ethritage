@@ -13,14 +13,17 @@ myEmitter.on('ImageLoaded', () => {
 });
 
 myEmitter.on('ExifParsed', (exif) => {
-    console.log("ExifParsed....", exif);
+    console.log("ExifParsed....");
 });
-myEmitter.on("ThumbNailCreated", () => {
-    console.log("Thumbnail Created");
+myEmitter.on("ThumbNail_Start", () => {
+    console.log("Thumbnail Started...");
 });
-myEmitter.on("SavedToIPFS", () => {
-    console.log("Saved To IPFS");
+myEmitter.on("ThumbNail_Finished", () => {
+    console.log("Thumbnail Created...");
+});
+myEmitter.on("SavedToIPFS", (hash) => {
+    console.log("Saved To IPFS...", hash);
 });
 myEmitter.on("TokenMinted", () => {
-    console.log("Token Minted");
+    console.log("Token Minted...");
 });

@@ -4,22 +4,31 @@ const { myEmitter } = require("./MyEmitter");
 const loadImage = require("./loadImage");
 //Exif Parser
 const parseExif = require("./parseExif");
+//Image Management
+const resizeImage = require("./resizeImage");
 //Watcher
 const chokidar = require("chokidar");
+//IPFS
+const {IPFSnode, uploadToIPFS} = require("./IPFS");
 
 
 //Variables
 const watchedFolder = "./export";
 const thumbnails = []
 
+IPFSnode.on("ready", () => {
+  watch();
+})
 
-//watcher
+
 const watcher = chokidar.watch(watchedFolder, {
     ignored: /(^|[\/\\])\../,
     persistent: true
   });
 
 
+
+const watch = () => {
   watcher.on("add", async filePath => {
     myEmitter.emit('FileAdded', filePath);
 
@@ -27,9 +36,10 @@ const watcher = chokidar.watch(watchedFolder, {
 
     const exif = await parseExif(image, myEmitter);
 
+    const thumbnail = await resizeImage(image, myEmitter);
 
-
-    myEmitter.emit('ThumbNailCreated');
+    const hash = await uploadToIPFS(image);
+    
 
     myEmitter.emit('SavedToIPFS');
 
@@ -37,7 +47,7 @@ const watcher = chokidar.watch(watchedFolder, {
       
 
   })
-
+}
   
 
 
