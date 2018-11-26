@@ -1,22 +1,16 @@
 const { blockchainSubscription } = require("./blockchainSubscription");
-
 const { contractInstance } = require("./contractInstance");
 const keypair = require("../../secrets").keypair;
 const fireConfig = require("../../secrets").fireConfig;
-
 const chokidar = require("chokidar");
 const fs = require("fs");
 const IPFS = require("ipfs");
 const IPFSnode = new IPFS();
 const Parser = require("exif-parser");
-
 const eventLog = [];
 exports.eventLog = eventLog;
-
 const firebase = require("firebase");
-
 firebase.initializeApp(fireConfig);
-
 const admin = require('firebase-admin');
 //const functions = require('firebase-functions');
 const serviceAccount = require("../../secrets/ethritage-server-8bc3c0c09a45.json");
@@ -129,15 +123,22 @@ const getCurrentBlock= async () => {
 function watchFile() {
   watcher.on("add", async filePath => {
     console.log("File Detected....");
+    const instance = {
+      original: [],
+      versions: []
+    };
 
-    
-
-    const instance = {};
+    // const version = {
+    //   ImageFileName,
+    //   ImageIPFSHash,
+    //   FileSize
+    // }
 
     //------------ // Create a buffer from the added File // ------------//
     const _jpegData = fs.readFileSync(filePath);
-    instance.hiResImage = _jpegData;
-
+    instance.versions.push()
+    instance.hiResImageHash = await IPFSnode.files.add(instance.hiResImage);
+ 
     //------------ // Parse the Image for Exif Data // ------------//
     const parser = Parser.create(instance.hiResImage);
     const _imageExifData = await parser.parse();
@@ -174,7 +175,7 @@ function watchFile() {
 
     console.log("Saving to IPFS...");
 
-    const ipfsImageHiResHash = await IPFSnode.files.add(instance.hiResImage);
+
     const ipfsImageThumbnailHash = await IPFSnode.files.add(
       instance.lowResImage
     );
