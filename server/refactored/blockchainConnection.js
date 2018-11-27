@@ -1,5 +1,6 @@
 const { blockchainSubscription } = require("./blockchainSubscription");
 const { contractInstance } = require("./contractInstance");
+const TokenInterface = require("../erc721-Interface");
 const keypair = require("../../secrets").keypair;
 
 //------------ // Web3 Interface // ------------//
@@ -26,7 +27,7 @@ const tokenInterface = new TokenInterface(
   web3Plus
 );
 
-const mintIt = async uri => {
+const mintIt = async (uri, myEmitter) => {
 
     const block = await getCurrentBlock();
     
@@ -39,6 +40,8 @@ const mintIt = async uri => {
       blockchainSubscription(events, block);
       console.log("Minting Token...");
       await tokenInterface.mintToken(uri);
+      myEmitter.emit('TokenMinted');
+      
     } catch (error) {
       console.log("MintIt Error: ", error);
     }
@@ -53,4 +56,4 @@ const mintIt = async uri => {
     }
   }
 
-  module.exports = mintIt;
+  module.exports = {mintIt};

@@ -10,6 +10,8 @@ const resizeImage = require("./resizeImage");
 const chokidar = require("chokidar");
 //IPFS
 const {IPFSnode, uploadImageToIPFS, uploadObjectToIPFS } = require("./IPFS");
+//Blockchain Connection
+const {mintIt} = require("./blockchainConnection");
 
 
 //Variables
@@ -50,8 +52,8 @@ const watch = () => {
 
     const instanceHash = await uploadObjectToIPFS(instance, myEmitter);
 
-    myEmitter.emit('TokenMinted');
-      
+    const token = await mintIt(instanceHash, myEmitter);
+
 
   })
 }
