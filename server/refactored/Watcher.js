@@ -29,6 +29,11 @@ const watcher = chokidar.watch(watchedFolder, {
     persistent: true
   });
 
+const thumbnailQualities = [{
+  quality: 70,
+  resize: 250
+}]
+
 
 
 const watch = () => {
@@ -39,7 +44,8 @@ const watch = () => {
 
     const exif = await parseExif(image, myEmitter);
 
-    const thumbnail = await makeThumbnails(image, myEmitter);
+    //returns and array of thumbnails. But we need an array of quality settings first. 
+    const thumbnail = await makeThumbnails(image, myEmitter, thumbnailQualities);
 
     const imageHash = await uploadImageToIPFS(image, myEmitter);
     const thumbHash = await uploadImageToIPFS(thumbnail, myEmitter);
