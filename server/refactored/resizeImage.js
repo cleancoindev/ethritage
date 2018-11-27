@@ -38,7 +38,8 @@ const makeThumbnails = async (
   await resizeImages();
 
   myEmitter.emit("ThumbNail_Finished");
-  return resizedThumbnails[0];
+
+  return resizedThumbnails;
 };
 
 module.exports = makeThumbnails;

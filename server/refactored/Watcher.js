@@ -9,7 +9,7 @@ const makeThumbnails = require("./resizeImage");
 //Watcher
 const chokidar = require("chokidar");
 //IPFS
-const {IPFSnode, uploadImageToIPFS, uploadObjectToIPFS } = require("./IPFS");
+const {IPFSnode, uploadSingleImageToIPFS, uploadObjectToIPFS, uploadMultipleImagesToIPFS } = require("./IPFS");
 //Blockchain Connection
 const {mintIt} = require("./blockchainConnection");
 
@@ -32,6 +32,9 @@ const watcher = chokidar.watch(watchedFolder, {
 const thumbnailQualities = [{
   quality: 70,
   resize: 250
+}, {
+  quality: 70,
+  resize: 400
 }]
 
 
@@ -47,18 +50,19 @@ const watch = () => {
     //returns and array of thumbnails. But we need an array of quality settings first. 
     const thumbnail = await makeThumbnails(image, myEmitter, thumbnailQualities);
 
-    const imageHash = await uploadImageToIPFS(image, myEmitter);
-    const thumbHash = await uploadImageToIPFS(thumbnail, myEmitter);
+    //const imageHash = await uploadSingleImageToIPFS(image, myEmitter);
+    const thumbHash = await uploadMultipleImagesToIPFS(thumbnail, myEmitter);
+    console.log("Thumbhash: ", thumbHash);
     
-    const instance = {
-      imageHash,
-      thumbHash,
-      exif
-    }
+    // const instance = {
+    //   imageHash,
+    //   thumbHash,
+    //   exif
+    // }
 
-    const instanceHash = await uploadObjectToIPFS(instance, myEmitter);
+    //const instanceHash = await uploadObjectToIPFS(instance, myEmitter);
 
-    const token = await mintIt(instanceHash, myEmitter);
+    //const token = await mintIt(instanceHash, myEmitter);
 
 
   })
