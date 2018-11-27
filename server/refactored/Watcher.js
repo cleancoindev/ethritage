@@ -5,7 +5,7 @@ const loadImage = require("./loadImage");
 //Exif Parser
 const parseExif = require("./parseExif");
 //Image Management
-const resizeImage = require("./resizeImage");
+const makeThumbnails = require("./resizeImage");
 //Watcher
 const chokidar = require("chokidar");
 //IPFS
@@ -39,7 +39,7 @@ const watch = () => {
 
     const exif = await parseExif(image, myEmitter);
 
-    const thumbnail = await resizeImage(image, myEmitter);
+    const thumbnail = await makeThumbnails(image, myEmitter);
 
     const imageHash = await uploadImageToIPFS(image, myEmitter);
     const thumbHash = await uploadImageToIPFS(thumbnail, myEmitter);

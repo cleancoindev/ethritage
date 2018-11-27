@@ -1,23 +1,44 @@
 const Jimp = require("jimp");
 Jimp.RESIZE_HERMITE;
 
+const resizeMethod = Jimp.AUTO;
+
 const quality = {
   quality: 70,
   resize: 250
 };
 
-const resizeImage = async (imageBuffer, myEmitter, qualitySettings = quality) =>{
+const makeThumbnails = async (
+  imageBuffer,
+  myEmitter,
+  qualitySettings = [quality]
+) => {
+  myEmitter.emit("ThumbNail_Start");
 
-    myEmitter.emit('ThumbNail_Start');
-    const image = await Jimp.read(imageBuffer)
-    const thumbnail = image.clone();
+  const image = await Jimp.read(imageBuffer);
 
-    thumbnail.quality(qualitySettings.quality);
-    thumbnail.resize(qualitySettings.resize, Jimp.AUTO);
+  const resizedThumbnails = [];
 
-    const thumbnailBuffer = await thumbnail.getBufferAsync(Jimp.MIME_JPEG);
-    myEmitter.emit('ThumbNail_Finished');
-    return thumbnailBuffer;
-} 
+  const resizeImages = async () => {
+    qualitySettings.forEach(async quality => {
+      const thumbnail = image.clone();
+      thumbnail.quality(quality.quality);
+      thumbnail.resize(quality.resize, resizeMethod);
 
-module.exports = resizeImage;
+      try {
+        const thumbnailBuffer = await thumbnail.getBufferAsync(Jimp.MIME_JPEG);
+        resizedThumbnails.push(thumbnailBuffer);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  };
+
+  await resizeImages();
+
+  myEmitter.emit("ThumbNail_Finished");
+  console.log("Resized thumbnails 2 is: ", resizedThumbnails);
+  return resizedThumbnails[0];
+};
+
+module.exports = makeThumbnails;
