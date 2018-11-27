@@ -13,6 +13,7 @@ const makeThumbnails = async (
   myEmitter,
   qualitySettings = [quality]
 ) => {
+
   myEmitter.emit("ThumbNail_Start");
 
   const image = await Jimp.read(imageBuffer);
@@ -37,7 +38,6 @@ const makeThumbnails = async (
   await resizeImages();
 
   myEmitter.emit("ThumbNail_Finished");
-  console.log("Resized thumbnails 2 is: ", resizedThumbnails);
   return resizedThumbnails[0];
 };
 
