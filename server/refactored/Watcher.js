@@ -1,7 +1,7 @@
 //Front End Feedback
 const { myEmitter } = require("./MyEmitter");
 //ImageLoader
-const {loadImage, FileUtil} = require("./loadImage");
+const FileUtil = require("./FileUtil");
 //Exif Parser
 const parseExif = require("./parseExif");
 //Image Management

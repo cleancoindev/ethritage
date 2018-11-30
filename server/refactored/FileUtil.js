@@ -22,14 +22,4 @@ class FileUtil {
 }
 
 
-const loadImage = (filePath) => {
-
-
-    const image = fs.readFileSync(filePath);
-    myEmitter.emit('ImageLoaded');
-
-    return image;
-
-}
-
-module.exports = {loadImage, FileUtil};
+module.exports = FileUtil;
