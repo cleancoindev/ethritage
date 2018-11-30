@@ -77,7 +77,8 @@
     "test": "node scripts/test.js --env=jsdom",
     "chain": "ganache-cli",
     "prepare": "npm run build",
-    "server": "ganache-cli && truffle migrate --reset && node /server/testing/fileCheck.js"
+    "server": "ganache-cli && truffle migrate --reset && node /server/testing/fileCheck.js",
+    "watch" : "node server/refactored/Watcher.js"
   },
   "jest": {
     "collectCoverageFrom": [

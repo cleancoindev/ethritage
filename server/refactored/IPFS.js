@@ -18,25 +18,43 @@ const uploadObjectToIPFS = async (object, myEmitter) => {
 
 const uploadMultipleImagesToIPFS = async (fileArray, myEmitter) => {
 
+  const fileHashArray = [];
+  console.log("FileHash array before: ", fileHashArray);
 
- const uploadFile = async () => {
-    const fileHashArray = [];
 
-    fileArray.forEach(async (file, index) => {
-        IPFSnode.files.add(file).then((hash) => {
-            console.log("Hash is: ", hash)
-            fileHashArray.push(hash[0].hash)
-        })
-    });
+ function uploadFile(file) {
+  // 1 - Create a new Promise
+  return new Promise(function (resolve, reject) {
+      // 2 - Copy-paste your code inside this function
+      IPFSnode.files.add(file, function (err, req, hash) {
 
-    return fileHashArray;
- }
+          if (err) {
+              reject(err);
+          } else {
+            console.log("In the resolve. Hash is: ", hash);
+              resolve(hash);
+          }
+      });
+  });
+}
 
- const hashArray = await uploadFile();
 
-console.log("FileHash array after: ", hashArray);
+uploadFile(fileArray[0]).then(function (result) {
+  console.log("The hash result: ",result)
+  fileHashArray.push(result);
+}).catch(function (err) {
+  console.log("Error", err)
+});
 
-  return hashArray;
+
+
+
+
+
+
+console.log("FileHash array after: ", fileHashArray);
+
+  
 };
 
 module.exports = {
@@ -45,6 +63,8 @@ module.exports = {
   uploadObjectToIPFS,
   uploadMultipleImagesToIPFS
 };
+
+
 
 
       // try {

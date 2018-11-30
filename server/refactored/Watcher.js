@@ -15,7 +15,7 @@ const {mintIt} = require("./blockchainConnection");
 
 
 //Variables
-const watchedFolder = "./export";
+const watchedFolder = "/Users/dennisonbertram/Documents/ethritage/server/refactored/export";
 
 
 IPFSnode.on("ready", () => {
@@ -50,9 +50,11 @@ const watch = () => {
     //returns and array of thumbnails. But we need an array of quality settings first. 
     const thumbnail = await makeThumbnails(image, myEmitter, thumbnailQualities);
 
+    
+
     //const imageHash = await uploadSingleImageToIPFS(image, myEmitter);
-    const thumbHash = await uploadMultipleImagesToIPFS(thumbnail, myEmitter);
-    console.log("Thumbhash: ", thumbHash);
+    // const thumbHash = await uploadMultipleImagesToIPFS(thumbnail, myEmitter);
+    // console.log("Thumbhash: ", thumbHash);
     
     // const instance = {
     //   imageHash,
