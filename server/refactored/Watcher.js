@@ -1,7 +1,7 @@
 //Front End Feedback
 const { myEmitter } = require("./MyEmitter");
 //ImageLoader
-const loadImage = require("./loadImage");
+const {loadImage, FileUtil} = require("./loadImage");
 //Exif Parser
 const parseExif = require("./parseExif");
 //Image Management
@@ -17,7 +17,7 @@ const fs = require("fs");
 
 
 //Variables
-const watchedFolder = "../export";
+const watchedFolder = "server/refactored/export";
 
 
 IPFSnode.on("ready", () => {
@@ -45,7 +45,11 @@ const watch = () => {
   watcher.on("add", async filePath => {
     myEmitter.emit('FileAdded', filePath);
 
-    const image = await loadImage(filePath);
+    const instance = new FileUtil(filePath);
+
+    //const image = await loadImage(filePath);
+    const image = instance.loadImage();
+
 
     const exif = await parseExif(image);
 
@@ -56,18 +60,18 @@ const watch = () => {
     const imageHash = await uploadSingleImageToIPFS(image);
 
     const uuidv4 = require('uuid/v4');
-    const newFolderPath = watchedFolder + "/" + uuidv4;
+    const newFolderPath = watchedFolder + "/" + uuidv4();
     //Use that hash as new folder
     fs.mkdirSync(newFolderPath);
 
-    fs.rename(
-      filePath,
-      `${newFolderPath}.jpg`,
-      function(err) {
-        if (err) throw err;
-        console.log("Move complete.");
-      }
-    );
+    // fs.rename(
+    //   filePath,
+    //   `${newFolderPath}.jpg`,
+    //   function(err) {
+    //     if (err) throw err; 
+    //     console.log("Move complete.");
+    //   }
+    // );
  
     
     // const thumbHash = await uploadMultipleImagesToIPFS(thumbnail, myEmitter);
