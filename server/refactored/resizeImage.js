@@ -1,4 +1,6 @@
 const Jimp = require("jimp");
+//Front End Feedback
+const { myEmitter } = require("./MyEmitter");
 Jimp.RESIZE_HERMITE;
 
 const resizeMethod = Jimp.AUTO;
@@ -10,7 +12,6 @@ const quality = {
 
 const makeThumbnails = async (
   imageBuffer,
-  myEmitter,
   qualitySettings = [quality]
 ) => {
 

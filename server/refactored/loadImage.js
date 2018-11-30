@@ -1,6 +1,7 @@
 const fs = require("fs");
+const { myEmitter } = require("./MyEmitter");
 
-const loadImage = (filePath, myEmitter) => {
+const loadImage = (filePath) => {
 
 
     const image = fs.readFileSync(filePath);

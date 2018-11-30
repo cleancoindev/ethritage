@@ -1,14 +1,16 @@
 const IPFS = require("ipfs");
 const IPFSnode = new IPFS();
+//Front End Feedback
+const { myEmitter } = require("./MyEmitter");
 
 //This should accept Arrays going forward
-const uploadSingleImageToIPFS = async (file, myEmitter) => {
+const uploadSingleImageToIPFS = async (file) => {
   const hash = await IPFSnode.files.add(file);
   myEmitter.emit("ImageSavedToIPFS", hash[0].hash);
   return hash[0].hash;
 };
 
-const uploadObjectToIPFS = async (object, myEmitter) => {
+const uploadObjectToIPFS = async (object) => {
   const objectHash = await IPFSnode.files.add(
     Buffer.from(JSON.stringify(object), "utf8")
   );
@@ -16,7 +18,7 @@ const uploadObjectToIPFS = async (object, myEmitter) => {
   return objectHash[0].hash;
 };
 
-const uploadMultipleImagesToIPFS = async (fileArray, myEmitter) => {
+const uploadMultipleImagesToIPFS = async (fileArray) => {
 
   const fileHashArray = [];
   console.log("FileHash array before: ", fileHashArray);

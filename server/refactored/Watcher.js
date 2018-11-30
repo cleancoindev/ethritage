@@ -12,10 +12,12 @@ const chokidar = require("chokidar");
 const {IPFSnode, uploadSingleImageToIPFS, uploadObjectToIPFS, uploadMultipleImagesToIPFS } = require("./IPFS");
 //Blockchain Connection
 const {mintIt} = require("./blockchainConnection");
+//FS
+const fs = require("fs");
 
 
 //Variables
-const watchedFolder = "/Users/dennisonbertram/Documents/ethritage/server/refactored/export";
+const watchedFolder = "../export";
 
 
 IPFSnode.on("ready", () => {
@@ -43,16 +45,31 @@ const watch = () => {
   watcher.on("add", async filePath => {
     myEmitter.emit('FileAdded', filePath);
 
-    const image = await loadImage(filePath, myEmitter);
+    const image = await loadImage(filePath);
 
-    const exif = await parseExif(image, myEmitter);
+    const exif = await parseExif(image);
 
     //returns and array of thumbnails. But we need an array of quality settings first. 
-    const thumbnail = await makeThumbnails(image, myEmitter, thumbnailQualities);
+    const thumbnail = await makeThumbnails(image, thumbnailQualities);
 
+    //Get the main image hash
+    const imageHash = await uploadSingleImageToIPFS(image);
+
+    const uuidv4 = require('uuid/v4');
+    const newFolderPath = watchedFolder + "/" + uuidv4;
+    //Use that hash as new folder
+    fs.mkdirSync(newFolderPath);
+
+    fs.rename(
+      filePath,
+      `${newFolderPath}.jpg`,
+      function(err) {
+        if (err) throw err;
+        console.log("Move complete.");
+      }
+    );
+ 
     
-
-    //const imageHash = await uploadSingleImageToIPFS(image, myEmitter);
     // const thumbHash = await uploadMultipleImagesToIPFS(thumbnail, myEmitter);
     // console.log("Thumbhash: ", thumbHash);
     
